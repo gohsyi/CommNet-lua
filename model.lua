@@ -22,7 +22,7 @@ local function nonlin()
 end
 
 local function build_encoder(hidsz)
-    local in_dim = (g_opts.visibility*2+1)^2 * g_opts.nwords
+    local in_dim = ((g_opts.visibility*2+1)^2 + g_opts.nsignals) * g_opts.nwords
     if g_opts.encoder_lut then
         in_dim = in_dim + 1 -- for NIL padding
         g_opts.encoder_lut_nil = in_dim

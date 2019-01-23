@@ -30,7 +30,7 @@ function train_batch(test_run)
     local active = {}
 
     -- for recurrent models
-    local in_dim = (g_opts.visibility*2+1)^2 * g_opts.nwords
+    local in_dim = ((g_opts.visibility*2+1)^2 + g_opts.nsignals) * g_opts.nwords
     local hid_state = torch.Tensor(g_opts.batch_size * g_opts.nagents, g_opts.hidsz):fill(0)
     local hid_grad = torch.Tensor(g_opts.batch_size * g_opts.nagents, g_opts.hidsz):fill(0)
     local cell_state, cell_grad

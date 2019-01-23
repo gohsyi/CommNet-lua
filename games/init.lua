@@ -49,6 +49,7 @@ end
 function g_init_vocab()
     local function vocab_add(word)
         if g_vocab[word] == nil then
+            print(word, 'added to vocab')
             local ind = g_opts.nwords + 1
             g_opts.nwords = g_opts.nwords + 1
             g_vocab[word] = ind
@@ -141,6 +142,9 @@ function g_init_vocab()
             end
         end
     end
+
+    -- random signals
+    for s = 1, g_opts.nsignals do vocab_add(s) end
 end
 
 function g_init_game()
@@ -152,6 +156,6 @@ function new_game()
     if g_opts.game == nil or g_opts.game == '' then
         return g_factory:init_random_game()
     else
-       return g_factory:init_game(g_opts.game)
+        return g_factory:init_game(g_opts.game)
     end
 end

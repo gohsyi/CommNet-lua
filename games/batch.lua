@@ -14,11 +14,13 @@ function batch_init(size)
 end
 
 function batch_input(batch, active, t)
+    -- return a batch of input data with shape: (batch_size*nagents, -1)
+    -- all data are stored as onehot
     if g_opts.encoder_lut then
         return batch_input_lut(batch, active, t)
     end
     active = active:view(#batch, g_opts.nagents)
-    local input = torch.Tensor(#batch, g_opts.nagents, 2*g_opts.visibility+1, 2*g_opts.visibility+1, g_opts.nwords)
+    local input = torch.Tensor(#batch, g_opts.nagents, 2*g_opts.visibility+1, 2*g_opts.visibility+1, g_opts.nwords)  -- nwords is 224
     input:fill(0)
     for i, g in pairs(batch) do
         for a = 1, g_opts.nagents do
@@ -29,6 +31,19 @@ function batch_input(batch, active, t)
         end
     end
     input = input:view(#batch * g_opts.nagents, -1)
+
+    -- concatenate input and signal
+    for i = 1, g_opts.nsignals do
+        local sig = torch.zeros(#batch * g_opts.nagents, g_opts.nwords)
+        local signal = torch.random(1, g_opts.nsignals)
+        for a = 1, g_opts.nagents do
+            for b = 1, #batch do
+                sig[a * b][g_vocab[signal]] = 1
+            end
+        end
+        input = torch.cat(input, sig)
+    end
+
     return input
 end
 
