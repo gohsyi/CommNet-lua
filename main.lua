@@ -98,10 +98,17 @@ cmd:option('--no_coop', false, 'agents are NOT cooperative')
 cmd:option('--plot', false, 'plot average reward during training')
 cmd:option('--curriculum_sta', 0, 'start making harder after this many epochs')
 cmd:option('--curriculum_end', 0, 'when to make the game hardest')
+cmd:option('--write', '', 'file name to write log')
 
 g_opts = cmd:parse(arg or {})
 
 if g_opts.plot then require'gnuplot' end
+if g_opts.write then 
+    g_write = io.open(g_opts.write, 'w')
+    io.close(g_write)
+    g_write = io.open(g_opts.write, 'a')
+    io.output(g_write)
+end
 
 if g_opts.model == 'rnn' or g_opts.model == 'lstm' then
     g_opts.recurrent = true
@@ -157,3 +164,5 @@ test = function() train_batch(true) end
 
 train(g_opts.epochs - #g_log)
 g_save_model()
+
+if g_opts.write then io.close(g_write) end
