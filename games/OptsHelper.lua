@@ -158,10 +158,20 @@ end
 function OptsHelper:set_hardness(h)
     -- change hardness of all options
     -- h = 0 for easiest, and h = 1 for hardest
+    print('set_hardness() called')
     for _, name in pairs(self.dparams) do
+--        mapW 18 18 18 18 1
+--        add_rate 0.0250 0.0250 0.0250 0.1000 0.0100
+--        mapH 18 18 18 18 1
+--        self[name][1]: final value
+--        self[name][2]: intermediate value
+--        self[name][3]: value under easiest setting
+--        self[name][4]: value under hardest setting
+--        self[name][5]: minimum unit
         self[name][2] = self[name][3] + h * (self[name][4] - self[name][3])
         self[name][2] = torch.round(self[name][2]/self[name][5]) * self[name][5]
         self[name][1] = self[name][2]
+--        print(name, self[name][1])
     end
 end
 
@@ -170,6 +180,7 @@ function OptsHelper:harder_random()
     -- hardest just means the hardest possible selection
     -- gets hardest.  the easiest possible selection
     -- stays the same
+    print('harder_random() called')
     if self.frozen then return end
     local m = torch.random(#self.dparams)
     local name = self.dparams[m]
@@ -182,6 +193,7 @@ function OptsHelper:easier_random()
     -- easier just means the hardest possible selection
     -- gets easier.  the easiest possible selection
     -- stays the same
+    print('easier_random() called')
     if self.frozen then return end
     local m = torch.random(#self.dparams)
     local name = self.dparams[m]
@@ -228,6 +240,7 @@ function OptsHelper:hardest()
     for s = 1, #self.dparams do
         local name = self.dparams[s]
         self[name][2] = self[name][4]
+        print('hardest()', name, self[name][4])
     end
 end
 
@@ -240,6 +253,7 @@ function OptsHelper:easiest()
     for s = 1, #self.dparams do
         local name = self.dparams[s]
         self[name][2] = self[name][3]
+        print('easiest', name, self[name][3])
     end
 end
 

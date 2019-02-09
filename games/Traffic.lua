@@ -43,6 +43,8 @@ function Traffic:__init(opts, vocab)
         agent.nactions = 0
         agent:add_action('gas',
             function(self)
+--                print(self.route)
+--                os.execute('sleep 60')
                 assert(self.route)
                 self.route_pos = self.route_pos + 1
                 local y = self.route[self.route_pos].y

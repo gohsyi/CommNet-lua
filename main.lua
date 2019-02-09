@@ -19,7 +19,7 @@ local function init_threads()
     local threads = require('threads')
     threads.Threads.serialization('threads.sharedserialize')
     local workers = threads.Threads(g_opts.nworker, init)
-    workers:specific(true)
+        workers:specific(true)
     for w = 1, g_opts.nworker do
         workers:addjob(w,
             function(opts_orig, vocab_orig)
@@ -67,7 +67,7 @@ cmd:option('--clip_grad', 0, 'gradient clip value')
 cmd:option('--alpha', 0.03, 'coefficient of baseline term in the cost function')
 cmd:option('--epochs', 100, 'the number of training epochs')
 cmd:option('--nbatches', 100, 'the number of mini-batches in one epoch')
-cmd:option('--batch_size', 16, 'size of mini-batch (the number of parallel games) in each thread')
+cmd:option('--batch_size', 288, 'size of mini-batch (the number of parallel games) in each thread')
 cmd:option('--nworker', 1, 'the number of threads used for training')
 cmd:option('--reward_mult', 1, 'coeff to multiply reward for bprop')
 -- for optim
@@ -103,7 +103,7 @@ cmd:option('--write', '', 'file name to write log')
 g_opts = cmd:parse(arg or {})
 
 if g_opts.plot then require'gnuplot' end
-if g_opts.write then 
+if g_opts.write ~= '' then
     g_write = io.open(g_opts.write, 'w')
     io.close(g_write)
     g_write = io.open(g_opts.write, 'a')
@@ -158,6 +158,14 @@ g_optim_state = {}
 g_init_model()
 g_load_model()
 
+g_brake = {}  -- # of brakes for each type of route
+g_gas = {}  -- # of brakes for each type of route
+
+for i = 1, 12 do
+    g_brake['route' .. i] = 0
+    g_gas['route' .. i] = 0
+end
+
 if #g_log == 0 then print(g_opts) end
 
 test = function() train_batch(true) end
@@ -165,4 +173,4 @@ test = function() train_batch(true) end
 train(g_opts.epochs - #g_log)
 g_save_model()
 
-if g_opts.write then io.close(g_write) end
+if g_opts.write ~= '' then io.close(g_write) end

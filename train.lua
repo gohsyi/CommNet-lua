@@ -104,6 +104,11 @@ function train_batch(test_run)
             stat.step_active = (stat.step_active or 0) + active[t]:sum()
             stat.step_count = (stat.step_count or 0) + #batch * g_opts.nagents
             action[t] = sample_multinomial(torch.exp(out[g_model_outputs['action_prob']]))
+
+--            TODO
+--            print(action[t])
+--            print(torch.exp(out[g_model_outputs['action_prob']]))
+
             if test_run then
                 batch[1].map:print_ascii()
                 os.execute('sleep 0.2')
@@ -366,7 +371,12 @@ end
 
 function train(N)
     for n = 1, N do
+        for i = 1, 12 do
+            g_brake['route' .. i] = 0
+            g_gas['route' .. i] = 0
+        end
         local ep = #g_log + 1
+
         if g_opts.curriculum_end > 0 then
             -- adjust curriculum
             assert(g_opts.curriculum_end > g_opts.curriculum_sta)
@@ -428,6 +438,12 @@ function train(N)
                 p[i] = g_log[i].reward
             end
             gnuplot.plot(p)
+        end
+
+        print(g_brake)
+        print(g_gas)
+        for i = 1, 12 do
+            print(g_gas['route'..i] / (g_brake['route'..i] + g_gas['route'..i]))
         end
     end
 end

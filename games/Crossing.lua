@@ -82,4 +82,6 @@ function Crossing:build_roads()
     self:build_roads_part(function(y, x)
         return self.map.height + 1 - y, self.map.width + 1 - x
         end)
+--    print(self.routes)
+--    os.execute('sleep 60')
 end

@@ -124,3 +124,9 @@ Train LSTM on combat tasks
     
     th main.lua --lrate 0.001 --model lstm --games_config_path games/config/combat_game.lua \
     --nagents 5 --max_steps 40 --epochs 300 --comm
+
+
+## Note:
+
+- `add_action()` is in `MazeAgent.lua`
+ 

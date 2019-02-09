@@ -31,7 +31,9 @@ end
 
 function MazeAgent:add_action(name, f)
     if not self.action_ids[name] then
+--        print('adding action ' .. name)
         self.nactions = self.nactions + 1
+--        print(self.nactions)
         self.action_names[self.nactions] = name
         self.actions[self.nactions] = f
         self.action_ids[name] = self.nactions
@@ -168,4 +170,10 @@ function MazeAgent:act(action_id)
     end
     f(self)
     self.last_action = action_id
+
+    if action_id == 2 then
+        g_brake[self.attr.route] = g_brake[self.attr.route] + 1
+    else
+        g_gas[self.attr.route] = g_gas[self.attr.route] + 1
+    end
 end
