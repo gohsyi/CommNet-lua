@@ -170,6 +170,8 @@ if #g_log == 0 then print(g_opts) end
 
 test = function() train_batch(true) end
 
+if g_opts.show then test() end
+
 train(g_opts.epochs - #g_log)
 g_save_model()
 
