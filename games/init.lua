@@ -95,7 +95,7 @@ function g_init_vocab()
                     vocab_add('ay' .. y .. 'x' .. x)
                 end
             end
-            for i = 1, 10 do
+            for i = 1, g_opts.nagents do
                 vocab_add('agent' .. i)
             end
             vocab_add('gas')
