@@ -440,8 +440,8 @@ function train(N)
             gnuplot.plot(p)
         end
 
-        print(g_brake)
-        print(g_gas)
+        print('brakes', g_brake)
+        print('gases', g_gas)
         for i = 1, 12 do
             print(g_gas['route'..i] / (g_brake['route'..i] + g_gas['route'..i]))
         end

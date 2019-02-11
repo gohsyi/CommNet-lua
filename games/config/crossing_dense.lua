@@ -37,7 +37,7 @@ sso.max_agents = g_opts.nagents
 local CrossingRangeOpts = {}
 CrossingRangeOpts.mapH = mapH:clone()
 CrossingRangeOpts.mapW = mapW:clone()
-CrossingRangeOpts.add_rate = torch.Tensor{1.,1.,1.,1.,1.}
+CrossingRangeOpts.add_rate = torch.Tensor{0.05,0.05,0.05,1.,1.}
 
 
 local CrossingStaticOpts = {}
