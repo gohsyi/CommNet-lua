@@ -160,6 +160,7 @@ g_load_model()
 
 g_brake = {}  -- # of brakes for each type of route
 g_gas = {}  -- # of brakes for each type of route
+g_signal = 0  -- traffic signal
 
 for i = 1, 12 do
     g_brake['route' .. i] = 0
@@ -170,7 +171,7 @@ if #g_log == 0 then print(g_opts) end
 
 test = function() train_batch(true) end
 
-if g_opts.show then test() end
+--if g_opts.show then test() end
 
 train(g_opts.epochs - #g_log)
 g_save_model()

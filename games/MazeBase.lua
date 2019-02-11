@@ -232,6 +232,9 @@ function MazeBase:get_visible_state(data, use_lut)
                                 else
                                     data[data_y][data_x][self.vocab[s[i]]] = 1
                                 end
+                                if g_opts.nsignals > 0 then
+                                    data[data_y][data_x][self.vocab['sig'..g_signal]] = 1
+                                end
                             end
                         end
                     end

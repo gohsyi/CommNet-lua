@@ -145,8 +145,11 @@ function g_init_vocab()
 
     -- random signals
     for s = 1, g_opts.nsignals do
-        vocab_add(s)
+        vocab_add('sig' .. s)
     end
+
+    print('number of words is ' .. g_opts.nwords)
+--    print(g_vocab)
 end
 
 function g_init_game()

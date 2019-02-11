@@ -22,6 +22,9 @@ function batch_input(batch, active, t)
     active = active:view(#batch, g_opts.nagents)
     local input = torch.Tensor(#batch, g_opts.nagents, 2*g_opts.visibility+1, 2*g_opts.visibility+1, g_opts.nwords)  -- nwords is 224
     input:fill(0)
+    if g_opts.nsignals > 0 then
+        g_signal = torch.random(1, g_opts.nsignals)
+    end
     for i, g in pairs(batch) do
         for a = 1, g_opts.nagents do
             set_current_agent(g, a)
@@ -30,9 +33,11 @@ function batch_input(batch, active, t)
             end
         end
     end
+--    print(input:size())
     input = input:view(#batch * g_opts.nagents, -1)
 
-    -- concatenate input and signal
+    -- concatenate input and signal, an old way and has been abandoned
+    --[=[
     for i = 1, g_opts.nsignals do
         local sig = torch.zeros(#batch * g_opts.nagents, g_opts.nwords)
         local signal = torch.random(1, g_opts.nsignals)
@@ -43,6 +48,7 @@ function batch_input(batch, active, t)
         end
         input = torch.cat(input, sig)
     end
+    ]=]--
 
     return input
 end
@@ -50,6 +56,9 @@ end
 function batch_input_lut(batch, active, t)
     active = active:view(#batch, g_opts.nagents)
     local input = torch.Tensor(#batch, g_opts.nagents, g_opts.encoder_lut_size)
+    if g_opts.nsignals > 0 then
+        g_signal = torch.random(1, g_opts.nsignals)
+    end
     input:fill(g_opts.encoder_lut_nil)
     for i, g in pairs(batch) do
         for a = 1, g_opts.nagents do
