@@ -213,7 +213,7 @@ function MazeBase:get_visible_state(data, use_lut)
                     if self.agent == e or (not e.attr._invisible) then
                         local s = e:to_sentence(0, 0, true)
                         if g_opts.batch_size == 1 then
-                            print(self.agent.name, ':', table.concat(s,', '))
+                            print(self.agent.name, ':', table.concat(s,', '), 'time', e.t)
                         end
                         for i = 1, #s do
                             if self.agent ~= e and s[i]:sub(1,4) == 'talk' then

@@ -142,12 +142,14 @@ function g_init_vocab()
             end
         end
     end
-
     -- random signals
     for s = 1, g_opts.nsignals do
         vocab_add('sig' .. s)
     end
-
+    -- time intervals
+    for s = 0, g_opts.ntimes do
+        vocab_add('time' .. s)
+    end
     print('number of words is ' .. g_opts.nwords)
 --    print(g_vocab)
 end

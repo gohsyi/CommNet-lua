@@ -53,6 +53,7 @@ cmd:option('--unroll', 10, 'unroll steps for recurrent model. 0 means full unrol
 cmd:option('--unroll_freq', 4, 'unroll after every several steps')
 -- game parameters
 cmd:option('--nsignals', 0, 'the number of random signals')
+cmd:option('--ntimes', 0, 'the number of time intervals')
 cmd:option('--nagents', 1, 'the number of agents')
 cmd:option('--nactions', 6, 'the number of agent actions')
 cmd:option('--max_steps', 20, 'force to end the game after this many steps')

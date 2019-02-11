@@ -49,5 +49,14 @@ function MazeItem:to_sentence(dy, dx, disable_loc)
             table.insert(s, v)
         end
     end
+    -- add random signals
+    if g_opts.nsignals > 0 then
+        table.insert(s, 'sig' .. g_signal)
+    end
+    -- add waiting time
+    if g_opts.ntimes > 0 then
+        local time_zone, _ = math.modf(self.t / (g_opts.max_steps/g_opts.ntimes))
+        table.insert(s, 'time' .. time_zone)
+    end
     return s
 end
